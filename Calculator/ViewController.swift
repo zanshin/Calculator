@@ -12,11 +12,21 @@ class ViewController: UIViewController
 {
     // The calculator display
     @IBOutlet weak var display: UILabel!
+    
+    // track if number is entered
+    var numberBeingEntered: Bool = false
 
     
     // The digit buttons append their title to the current display
     @IBAction func appendDigit(sender: UIButton) {
-        
+        let digit = sender.currentTitle!
+    
+        if numberBeingEntered {
+            display.text = display.text! + digit
+        } else {
+            display.text = digit
+            numberBeingEntered = true
+        }
     }
     
 }

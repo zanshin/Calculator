@@ -58,18 +58,32 @@ class ViewController: UIViewController
             enter()
         }
         
+        // Closures make for incredibly tight code
         switch operation {
-            case "×": performOperation({ (op1: Double, op2: Double) -> Double in return op1 * op2 })
-            case "÷": performOperation({ (op1: Double, op2: Double) -> Double in return op2 / op1 })
-            case "+": performOperation({ (op1: Double, op2: Double) -> Double in return op1 + op2 })
-            case "−": performOperation({ (op1: Double, op2: Double) -> Double in return op1 - op2 })
+            case "×": performOperation { $0 * $1 }
+            case "÷": performOperation { $1 / $0 }
+            case "+": performOperation { $0 + $1 }
+            case "−": performOperation { $1 - $0 }
+            case "√": performOperation { sqrt($0) }
             default: break
         }
     }
     
+    // Perform the selected operation against the operands
+    // Binary operations take two operands
     func performOperation(operation: (Double, Double) -> Double) {
         if operandStack.count >= 2 {
             displayValue = operation(operandStack.removeLast(), operandStack.removeLast())
+            enter()
+        }
+    }
+    
+    // Unary operations require a single operand
+    // Need `@nonobjc` attribute as Objective-C doesn't support method overloading
+    @nonobjc
+    func performOperation(operation: Double -> Double) {
+        if operandStack.count >= 1 {
+            displayValue = operation(operandStack.removeLast())
             enter()
         }
     }

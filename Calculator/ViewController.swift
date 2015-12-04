@@ -13,9 +13,22 @@ class ViewController: UIViewController
     // The calculator display
     @IBOutlet weak var display: UILabel!
     
-    // track if number is entered
-    var numberBeingEntered: Bool = false
+    // Track if number is currently being entered
+    var numberBeingEntered = false
+    
+    // Operand stack implemented as an Array
+    var operandStack = Array<Double>()
 
+    // Helper to convert display string to value and vice-versa
+    var displayValue: Double {
+        get {
+            return NSNumberFormatter().numberFromString(display.text!)!.doubleValue
+        }
+        set {
+            display.text = "\(newValue)"
+            numberBeingEntered = false
+        }
+    }
     
     // The digit buttons append their title to the current display
     @IBAction func appendDigit(sender: UIButton) {
@@ -26,6 +39,38 @@ class ViewController: UIViewController
         } else {
             display.text = digit
             numberBeingEntered = true
+        }
+    }
+    
+    // When the enter key is touched: start a new number and push the current number
+    // on the operand stack
+    @IBAction func enter() {
+        numberBeingEntered = false
+        operandStack.append(displayValue)
+        print("operandStack = \(operandStack)")
+    }
+    
+    // Perform the operation selected
+    @IBAction func operate(sender: UIButton) {
+        let operation = sender.currentTitle!
+        
+        if numberBeingEntered {
+            enter()
+        }
+        
+        switch operation {
+            case "×": performOperation({ (op1: Double, op2: Double) -> Double in return op1 * op2 })
+            case "÷": performOperation({ (op1: Double, op2: Double) -> Double in return op2 / op1 })
+            case "+": performOperation({ (op1: Double, op2: Double) -> Double in return op1 + op2 })
+            case "−": performOperation({ (op1: Double, op2: Double) -> Double in return op1 - op2 })
+            default: break
+        }
+    }
+    
+    func performOperation(operation: (Double, Double) -> Double) {
+        if operandStack.count >= 2 {
+            displayValue = operation(operandStack.removeLast(), operandStack.removeLast())
+            enter()
         }
     }
     

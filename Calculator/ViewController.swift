@@ -10,10 +10,14 @@ import UIKit
 
 class ViewController: UIViewController
 {
-    // The Calculator display
+    // The calculator display
     @IBOutlet weak var display: UILabel!
+
     
-    
+    // The digit buttons append their title to the current display
+    @IBAction func appendDigit(sender: UIButton) {
+        
+    }
     
 }
 

@@ -11,10 +11,21 @@ import Foundation
 class CalculatorModel
 {
     // Enumeration to hold the op types
-    private enum Op {
+    private enum Op: CustomStringConvertible {
         case Operand(Double)
         case UnaryOperation(String, Double -> Double)
         case BinaryOperation(String, (Double, Double) -> Double)
+        
+        // Use a computed property to improve printing of this Enum
+        var description: String {
+            get {
+                switch self {
+                    case .Operand(let operand): return "\(operand)"
+                    case .UnaryOperation(let symbol, _): return "\(symbol)"
+                    case .BinaryOperation(let symbol, _): return "\(symbol)"
+                }
+            }
+        }
     }
     
     // Stack of operands and operations, called `ops`
@@ -27,11 +38,14 @@ class CalculatorModel
     // Use * and + functions for those operations, can't for divide and minus
     // as order of operands needs to be reversed
     init() {
-        knownOps["×"] = Op.BinaryOperation("×", *)
-        knownOps["÷"] = Op.BinaryOperation("÷") { $1 / $0 }
-        knownOps["+"] = Op.BinaryOperation("+", +)
-        knownOps["−"] = Op.BinaryOperation("−") { $1 - $0 }
-        knownOps["√"] = Op.UnaryOperation("√", sqrt)
+        func learnOps(op: Op) {
+            knownOps[op.description] = op
+        }
+        learnOps(Op.BinaryOperation("×", *))
+        learnOps(Op.BinaryOperation("÷") { $1 / $0 })
+        learnOps(Op.BinaryOperation("+", +))
+        learnOps(Op.BinaryOperation("−") { $1 - $0 })
+        learnOps(Op.UnaryOperation("√", sqrt))
     }
     
     // Recursive evaluation function to pop operands and operations off our stack
@@ -65,7 +79,8 @@ class CalculatorModel
     
     // The outer evaluate function, which employs the recursive one to render a result
     func evaluate() -> Double? {
-        let (result, _) = evaluate(opStack)
+        let (result, remainder) = evaluate(opStack)
+        print("\(opStack) = \(result) with \(remainder) left over")
         return result
     }
     

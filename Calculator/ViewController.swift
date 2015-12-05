@@ -13,12 +13,12 @@ class ViewController: UIViewController
     // The calculator display
     @IBOutlet weak var display: UILabel!
     
+    // The calculator model or brain
+    var brain = CalculatorModel()
+    
     // Track if number is currently being entered
     var numberBeingEntered = false
     
-    // Operand stack implemented as an Array
-    var operandStack = Array<Double>()
-
     // Helper to convert display string to value and vice-versa
     var displayValue: Double {
         get {
@@ -43,49 +43,31 @@ class ViewController: UIViewController
     }
     
     // When the enter key is touched: start a new number and push the current number
-    // on the operand stack
+    // on the operand stack and display the result
     @IBAction func enter() {
         numberBeingEntered = false
-        operandStack.append(displayValue)
-        print("operandStack = \(operandStack)")
+        if let result = brain.pushOperand(displayValue) {
+            displayValue = result
+        } else {
+            displayValue = 0
+        }
     }
     
-    // Perform the operation selected
+    // Perform the operation selected and display the result
     @IBAction func operate(sender: UIButton) {
-        let operation = sender.currentTitle!
-        
         if numberBeingEntered {
             enter()
         }
         
         // Closures make for incredibly tight code
-        switch operation {
-            case "×": performOperation { $0 * $1 }
-            case "÷": performOperation { $1 / $0 }
-            case "+": performOperation { $0 + $1 }
-            case "−": performOperation { $1 - $0 }
-            case "√": performOperation { sqrt($0) }
-            default: break
+        if let operation = sender.currentTitle {
+            if let result = brain.performOperation(operation) {
+                displayValue = result
+            } else {
+                displayValue = 0
+            }
         }
-    }
-    
-    // Perform the selected operation against the operands
-    // Binary operations take two operands
-    func performOperation(operation: (Double, Double) -> Double) {
-        if operandStack.count >= 2 {
-            displayValue = operation(operandStack.removeLast(), operandStack.removeLast())
-            enter()
-        }
-    }
-    
-    // Unary operations require a single operand
-    // Need `@nonobjc` attribute as Objective-C doesn't support method overloading
-    @nonobjc
-    func performOperation(operation: Double -> Double) {
-        if operandStack.count >= 1 {
-            displayValue = operation(operandStack.removeLast())
-            enter()
-        }
+        
     }
     
 }

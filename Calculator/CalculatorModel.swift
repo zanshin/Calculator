@@ -69,14 +69,18 @@ class CalculatorModel
     }
     
     // Allow operands to be pushed onto the opStack
-    func pushOperand(operand: Double) {
+    // return result of evaluation
+    func pushOperand(operand: Double) -> Double? {
         opStack.append(Op.Operand(operand))
+        return evaluate()
     }
     
-    // For the symbols we know, perform the cooresponding operation
-    func performOperation(symbol: String) {
+    // For the symbols weA know, perform the cooresponding operation
+    // return result of evaluation
+    func performOperation(symbol: String) -> Double? {
         if let operation = knownOps[symbol] {
             opStack.append(operation)
         }
+        return evaluate()
     }
 }

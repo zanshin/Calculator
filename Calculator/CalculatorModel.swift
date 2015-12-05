@@ -10,11 +10,18 @@ import Foundation
 
 class CalculatorModel
 {
+    // Function for Pi
+    private func pi() -> Double {
+        return 3.141592653589793
+
+    }
+    
     // Enumeration to hold the op types
     private enum Op: CustomStringConvertible {
         case Operand(Double)
         case UnaryOperation(String, Double -> Double)
         case BinaryOperation(String, (Double, Double) -> Double)
+        case NullaryOperation(String)
         
         // Use a computed property to improve printing of this Enum
         var description: String {
@@ -23,6 +30,7 @@ class CalculatorModel
                     case .Operand(let operand): return "\(operand)"
                     case .UnaryOperation(let symbol, _): return "\(symbol)"
                     case .BinaryOperation(let symbol, _): return "\(symbol)"
+                    case .NullaryOperation(let symbol): return "\(symbol)"
                 }
             }
         }
@@ -46,6 +54,9 @@ class CalculatorModel
         learnOps(Op.BinaryOperation("+", +))
         learnOps(Op.BinaryOperation("−") { $1 - $0 })
         learnOps(Op.UnaryOperation("√", sqrt))
+        learnOps(Op.UnaryOperation("cos") { cos($0) })
+        learnOps(Op.UnaryOperation("sin") { sin($0) })
+        learnOps(Op.NullaryOperation("π"))
     }
     
     // Recursive evaluation function to pop operands and operations off our stack
@@ -57,6 +68,8 @@ class CalculatorModel
             switch op {
             case .Operand(let operand):
                 return (operand, remainingOps)
+            case .NullaryOperation(_):
+                return (pi(), remainingOps)
             case .UnaryOperation(_, let operation):
                 let operandEvaluation = evaluate(remainingOps)
                 if let operand = operandEvaluation.result {

@@ -173,7 +173,7 @@
                                 <rect key="frame" x="469.5" y="339.5" width="102.5" height="122.5"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <state key="normal" title=" "/>
+                                <state key="normal" title="π"/>
                                 <connections>
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oKW-nt-OQP"/>
                                 </connections>
@@ -182,7 +182,7 @@
                                 <rect key="frame" x="469.5" y="209.5" width="102.5" height="122"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <state key="normal" title=" "/>
+                                <state key="normal" title="sin"/>
                                 <connections>
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cX6-gB-oSk"/>
                                 </connections>
@@ -191,7 +191,7 @@
                                 <rect key="frame" x="469.5" y="79" width="102.5" height="122.5"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <state key="normal" title=" "/>
+                                <state key="normal" title="cos"/>
                                 <connections>
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pdB-jn-Ff0"/>
                                 </connections>

@@ -31,6 +31,7 @@ class CalculatorModel
         knownOps["÷"] = Op.BinaryOperation("÷") { $1 / $0 }
         knownOps["+"] = Op.BinaryOperation("+", +)
         knownOps["−"] = Op.BinaryOperation("−") { $1 - $0 }
+        knownOps["√"] = Op.UnaryOperation("√", sqrt)
     }
     
     // Recursive evaluation function to pop operands and operations off our stack

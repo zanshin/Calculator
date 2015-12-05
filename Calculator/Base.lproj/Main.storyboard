@@ -200,9 +200,9 @@
                                 <rect key="frame" x="28" y="470" width="102.5" height="122"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <state key="normal" title=" "/>
+                                <state key="normal" title="."/>
                                 <connections>
-                                    <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lau-ZL-FIb"/>
+                                    <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="m7j-Hb-HTb"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -307,7 +307,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="120" y="406"/>
+            <point key="canvasLocation" x="284" y="406"/>
         </scene>
     </scenes>
 </document>

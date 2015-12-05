@@ -19,6 +19,9 @@ class ViewController: UIViewController
     // Track if number is currently being entered
     var numberBeingEntered = false
     
+    // Track if number has a decimal, only one to a customer
+    var numberHasDecimal = false
+    
     // Helper to convert display string to value and vice-versa
     var displayValue: Double {
         get {
@@ -35,9 +38,21 @@ class ViewController: UIViewController
         let digit = sender.currentTitle!
     
         if numberBeingEntered {
+            if digit.containsString(".") {
+                if numberHasDecimal {
+                    return
+                } else {
+                    numberHasDecimal = true
+                }
+            }
             display.text = display.text! + digit
         } else {
-            display.text = digit
+            if digit.containsString(".") {
+                display.text = "0."
+                numberHasDecimal = true
+            } else {
+                display.text = digit
+            }
             numberBeingEntered = true
         }
     }

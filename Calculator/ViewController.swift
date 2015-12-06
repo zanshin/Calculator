@@ -10,8 +10,9 @@ import UIKit
 
 class ViewController: UIViewController
 {
-    // The calculator display
+    // The calculator display and the display history
     @IBOutlet weak var display: UILabel!
+    @IBOutlet weak var displayHistory: UILabel!
     
     // The calculator model or brain
     var brain = CalculatorModel()

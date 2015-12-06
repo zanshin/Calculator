@@ -99,7 +99,7 @@ class CalculatorModel
         return evaluate()
     }
     
-    // For the symbols weA know, perform the cooresponding operation
+    // For the symbols we know, perform the cooresponding operation
     // return result of evaluation
     func performOperation(symbol: String) -> Double? {
         if let operation = knownOps[symbol] {

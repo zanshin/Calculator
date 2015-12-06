@@ -66,7 +66,6 @@ class ViewController: UIViewController
             enter()
         }
         
-        // Closures make for incredibly tight code
         if let operation = sender.currentTitle {
             if let result = brain.performOperation(operation) {
                 displayValue = result

@@ -10,11 +10,6 @@ import Foundation
 
 class CalculatorModel
 {
-    // Function for Pi
-    private func pi() -> Double {
-        return 3.141592653589793
-
-    }
     
     // Enumeration to hold the op types
     private enum Op: CustomStringConvertible {
@@ -69,7 +64,7 @@ class CalculatorModel
             case .Operand(let operand):
                 return (operand, remainingOps)
             case .NullaryOperation(_):
-                return (pi(), remainingOps)
+                return (M_PI, remainingOps)
             case .UnaryOperation(_, let operation):
                 let operandEvaluation = evaluate(remainingOps)
                 if let operand = operandEvaluation.result {

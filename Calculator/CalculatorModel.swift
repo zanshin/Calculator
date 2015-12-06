@@ -92,6 +92,11 @@ class CalculatorModel
         return result
     }
     
+    // Expose the opStack
+    func showOpStack() -> String? {
+        return (opStack.map{ "\($0)" }).joinWithSeparator(" ")
+    }
+    
     // Allow operands to be pushed onto the opStack
     // return result of evaluation
     func pushOperand(operand: Double) -> Double? {

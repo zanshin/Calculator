@@ -28,6 +28,7 @@ class ViewController: UIViewController
         set {
             display.text = "\(newValue)"
             numberBeingEntered = false
+            displayHistory.text = brain.showOpStack()
         }
     }
     
